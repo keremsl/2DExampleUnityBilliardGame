@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Networking;
 
 namespace BilliardDemo {
@@ -9,6 +10,9 @@ namespace BilliardDemo {
         SunsetModel sunsetModel = default;
         const string BASE_URL = "https://api.sunrise-sunset.org/json?";
         const string DUMMY_LOCATION = "lat=41.015137&lng=28.979530"; // location of istanbul
+        const int TIME_OUT = 10;
+        public GameEventListener OnDataReady;
+
 
         async void Start () {
             string sunsetTxt;
@@ -17,15 +21,18 @@ namespace BilliardDemo {
             else
                 sunsetTxt = "";
 
-            //UIManager.Instance.SetWelcomeTxt (sunsetTxt);
+            await Task.Delay(1000);
+            OnDataReady.OnEventRaised();
         }
+
 
         public async Task<string> GetAsyncSunsetData () {
             var url = BASE_URL + DUMMY_LOCATION;
 
             using var www = UnityWebRequest.Get (url);
-
+            
             www.SetRequestHeader ("Content-Type", "application/json");
+            www.timeout = TIME_OUT;
 
             var operation = www.SendWebRequest ();
 
