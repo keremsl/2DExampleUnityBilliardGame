@@ -13,7 +13,6 @@ namespace BilliardDemo {
         const int TIME_OUT = 10;
         public GameEventListener OnDataReady;
 
-
         async void Start () {
             string sunsetTxt;
             if (CheckConnection ())
@@ -21,16 +20,17 @@ namespace BilliardDemo {
             else
                 sunsetTxt = "";
 
-            await Task.Delay(1000);
-            OnDataReady.OnEventRaised();
+            GameManager.Instance.SetSunsetTime (sunsetTxt);
+            print(sunsetTxt);
+            await Task.Delay (2000); // to show some tips on loading screen etc..
+            OnDataReady.OnEventRaised ();
         }
-
 
         public async Task<string> GetAsyncSunsetData () {
             var url = BASE_URL + DUMMY_LOCATION;
 
             using var www = UnityWebRequest.Get (url);
-            
+
             www.SetRequestHeader ("Content-Type", "application/json");
             www.timeout = TIME_OUT;
 
