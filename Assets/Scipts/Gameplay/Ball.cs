@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 
 namespace BilliardDemo {
-    [RequireComponent (typeof (Rigidbody2D))]
+    
     public class Ball : MonoBehaviour {
 
         protected Rigidbody2D mRigid2D;
@@ -29,7 +29,7 @@ namespace BilliardDemo {
 
         void OnCollisionEnter2D (Collision2D collision) {
             PlaySoundRespectToCol (collision);
-            if (collision.transform.GetComponent<Ball> ())
+            if (!(collision.transform.GetComponent<Ball> () is PlayerBall))
                 OnBallCollide.Raise ();
         }
 

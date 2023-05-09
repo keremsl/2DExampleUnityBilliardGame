@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+
+namespace BilliardDemo
+{
+
 public enum TIME_PERIOD {
     DEFAULT,
     NIGHT,
@@ -99,4 +103,7 @@ public class GameManager : MonoBehaviour {
         SceneManager.LoadScene(0);
     }
 
+}
+
+    
 }

@@ -29,6 +29,7 @@ namespace BilliardDemo {
         [SerializeField]
         TMP_Text scoreTxt;
         private void OnEnable () {
+            nameRequestWindow.playerNameField.characterLimit = 20;
             nameRequestWindow.okBtn.onClick.AddListener (() => {
                 OnPlayerNameSetted.OnEventRaised ();
             });
