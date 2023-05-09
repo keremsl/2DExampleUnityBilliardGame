@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 public enum TIME_PERIOD {
     DEFAULT,
     NIGHT,
@@ -22,7 +24,6 @@ public class GameManager : MonoBehaviour {
     public GameEventListener OnGameStarted;
     public GameEventListener OnDataReady;
     public GameEventListener OnPlayerNameSetted;
-    public GameEventListener OnPlayerCollide;
 
     User user;
     TimeSpan midnight = new TimeSpan (24, 0, 0);
@@ -91,6 +92,11 @@ public class GameManager : MonoBehaviour {
 
     public string GetTimePeriodAsString () {
         return user.timePeriod == TIME_PERIOD.NIGHT ? "Night" : "Day";
+    }
+
+
+    public void ResetGame() {
+        SceneManager.LoadScene(0);
     }
 
 }

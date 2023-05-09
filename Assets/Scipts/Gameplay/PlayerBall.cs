@@ -5,10 +5,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-
 namespace BilliardDemo {
 
-    [RequireComponent (typeof (Rigidbody2D))]    
+    [RequireComponent (typeof (Rigidbody2D))]
     public class PlayerBall : Ball, IPointerDownHandler, IPointerUpHandler {
         #region Constants
         const float MAX_FORCE = 500F;
@@ -30,19 +29,15 @@ namespace BilliardDemo {
         [SerializeField]
         LineRenderer directionDrawer;
 
+
+
         private void Update () {
             if (!isPressing) return;
 
             if (force <= MAX_FORCE)
                 force += Time.deltaTime * FORCE_EXTENDER;
-            else
-                force -= Time.deltaTime * FORCE_EXTENDER;
-
-            if (force <= 0)
-                force = 0;
 
             forceFiller.fillAmount = 1 - Mathf.Abs ((force / MAX_FORCE) - 1);
-
         }
 
         public void OnPointerDown (PointerEventData eventData) {
@@ -53,6 +48,7 @@ namespace BilliardDemo {
             if (isPressing) {
                 ForceToRandomDirection ();
                 HideFiller ();
+                SoundManager.Instance.PlayFirstShotSound ();
             }
         }
 
@@ -64,7 +60,10 @@ namespace BilliardDemo {
 
         void OnCollisionEnter2D (Collision2D collision) {
             if (mRigid2D.velocity.magnitude > 1) { // is meaningful to trigger drawer
-                DrawLineRespectToDirection(collision);
+                DrawLineRespectToDirection (collision);
+                PlaySoundRespectToCol (collision);
+                if (collision.transform.GetComponent<Ball> ())
+                    OnBallCollide.Raise();
             }
         }
 
@@ -110,7 +109,7 @@ namespace BilliardDemo {
 
         public void DrawLineRespectToDirection (Collision2D collision) {
             Vector2 collisionNormal = -collision.GetContact (0).normal;
-            
+
             Vector2 reflectionDirection = Vector2.Reflect (mRigid2D.velocity.normalized, collisionNormal);
 
             DOTween.Complete (directionDrawer.material);

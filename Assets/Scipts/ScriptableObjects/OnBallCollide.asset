@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b5241f5b4ad05054f8593994dee33af1, type: 3}
-  m_Name: OnPlayerCollide
+  m_Name: OnBallCollide
   m_EditorClassIdentifier: 

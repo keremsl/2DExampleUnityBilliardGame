@@ -16,17 +16,18 @@ namespace BilliardDemo {
     }
 
     public class UIManager : MonoBehaviour {
-        public static UIManager Instance = null;
-        public PlayerNameRequestWindow nameRequestWindow;
-        public GameObject loadingWindowGo;
-        public Image bgFaderImg;
-        public TMP_Text greetingTxt;
-        public GameEventListener OnPlayerNameSetted;
-        private void Awake () {
-            if (Instance == null)
-                Instance = this;
-        }
-
+        [SerializeField]
+        PlayerNameRequestWindow nameRequestWindow;
+        [SerializeField]
+        GameObject loadingWindowGo;
+        [SerializeField]
+        Image bgFaderImg;
+        [SerializeField]
+        TMP_Text greetingTxt;
+        [SerializeField]
+        GameEventListener OnPlayerNameSetted;
+        [SerializeField]
+        TMP_Text scoreTxt;
         private void OnEnable () {
             nameRequestWindow.okBtn.onClick.AddListener (() => {
                 OnPlayerNameSetted.OnEventRaised ();
@@ -59,14 +60,18 @@ namespace BilliardDemo {
 
         public void ShowGreetingMessage () {
             string str = "";
-            if(string.IsNullOrEmpty(GameManager.Instance.GetSunsetTime()))
-            str =  $"Great time {GameManager.Instance.GetUserName()} to play a billiard game!";
+            if (string.IsNullOrEmpty (GameManager.Instance.GetSunsetTime ()))
+                str = $"Great time {GameManager.Instance.GetUserName()} to play a billiard game!";
             else
-            str = $"Great time {GameManager.Instance.GetUserName()} to play a {GameManager.Instance.GetTimePeriodAsString()} billiard game! <color=\"green\">Sunset</color> today starts at {GameManager.Instance.GetSunsetTime()}.";
-            
+                str = $"Great time {GameManager.Instance.GetUserName()} to play a {GameManager.Instance.GetTimePeriodAsString()} billiard game! <color=\"green\">Sunset</color> today starts at {GameManager.Instance.GetSunsetTime()}.";
+
             greetingTxt.text = str;
             greetingTxt.DOFade (1F, 0.5F);
             greetingTxt.DOFade (0F, 0.5F).SetDelay (10f);
+        }
+
+        public void UpdateScoreTxt() {
+            scoreTxt.text = $"SCORE: {GameManager.Instance.GetUserScore()}"; 
         }
 
     }
