@@ -68,24 +68,29 @@ public class GameManager : MonoBehaviour {
         } else {
             string[] splittedTime = sunset.Split (":");
             if (splittedTime.Length > 2) {
-                user.sunsetTimeStr = splittedTime[0] + ":" + splittedTime[1];
-                user.sunsetTime = TimeSpan.Parse (user.sunsetTimeStr);
-                user.timePeriod = SetTimePeriod ();
+                SetSunsetValuesForUser (splittedTime);
             } else {
                 Debug.LogWarning ("Time format is wrong");
             }
         }
     }
 
+    public void SetSunsetValuesForUser (string[] str) {
+        user.sunsetTimeStr = str[0] + ":" + str[1];
+        user.sunsetTime = TimeSpan.Parse (user.sunsetTimeStr);
+        user.timePeriod = GetTimePeriod ();
+    }
+
     public string GetSunsetTime () {
         return user.sunsetTimeStr;
     }
 
-    public TIME_PERIOD SetTimePeriod () {
+    public TIME_PERIOD GetTimePeriod () {
         return TimeSpan.Compare (now, user.sunsetTime) == 1 && TimeSpan.Compare (now, midnight) != 1 ? TIME_PERIOD.NIGHT : TIME_PERIOD.DAY;
     }
 
     public string GetTimePeriodAsString () {
         return user.timePeriod == TIME_PERIOD.NIGHT ? "Night" : "Day";
     }
+
 }
