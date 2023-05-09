@@ -21,7 +21,7 @@ namespace BilliardDemo {
                 sunsetTxt = "";
 
             GameManager.Instance.SetSunsetTime (sunsetTxt);
-            print(sunsetTxt);
+            
             await Task.Delay (2000); // to show some tips on loading screen etc..
             OnDataReady.OnEventRaised ();
         }

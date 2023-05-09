@@ -66,7 +66,7 @@ namespace BilliardDemo {
             
             greetingTxt.text = str;
             greetingTxt.DOFade (1F, 0.5F);
-            greetingTxt.DOFade (0F, 0.5F).SetDelay (6f);
+            greetingTxt.DOFade (0F, 0.5F).SetDelay (10f);
         }
 
     }

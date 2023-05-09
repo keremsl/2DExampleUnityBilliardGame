@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
     public GameEventListener OnPlayerNameSetted;
     public GameEventListener OnPlayerCollide;
 
-    public User user;
+    User user;
     TimeSpan midnight = new TimeSpan (24, 0, 0);
     TimeSpan now = new TimeSpan (DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
 
