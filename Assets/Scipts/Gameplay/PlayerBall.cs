@@ -108,17 +108,16 @@ namespace BilliardDemo {
         }
 
         public void DrawLineRespectToDirection (Collision2D collision) {
-            Vector2 collisionNormal = -collision.GetContact (0).normal;
-
-            Vector2 reflectionDirection = Vector2.Reflect (mRigid2D.velocity.normalized, collisionNormal);
+            Vector2 colPoint = collision.GetContact (0).point;
+            Vector2 ballVelocity =  mRigid2D.velocity.normalized;
 
             DOTween.Complete (directionDrawer.material);
             directionDrawer.material.DOFloat (0.5f, "_Cutoff", 0.5f).OnComplete (() => {
                 directionDrawer.material.DOFloat (1f, "_Cutoff", 1f).SetDelay (1f);
             });
 
-            directionDrawer.SetPosition (0, transform.position + (Vector3) reflectionDirection * 0.5f);
-            directionDrawer.SetPosition (1, transform.position - (Vector3) reflectionDirection * 3f);
+            directionDrawer.SetPosition (0, colPoint);
+            directionDrawer.SetPosition (1, colPoint + ballVelocity * 3f);
         }
     }
 
